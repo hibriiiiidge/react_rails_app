@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import List from './List';
 import New from './New';
 import Show from './Show';
+import Edit from './Edit';
 
 // ReactRouter を使ったコンポーネントの定義
 const App = () => (
@@ -12,6 +13,7 @@ const App = () => (
       <Switch>
          <Route exact path='/new' component={ New } />
          <Route exact path='/message/:id' component={ Show }/>
+         <Route exact path='/message/:id/edit' component={ Edit }/>
          <Route exact path='/' component={ List }/>
        </Switch>
       <AppFooter />

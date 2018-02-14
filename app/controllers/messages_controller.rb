@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:show]
+  before_action :set_message, only: [:show, :update]
   
   def index
     messages = Message.all
@@ -9,11 +9,14 @@ class MessagesController < ApplicationController
   def create
     message = Message.new(message_params)
     message.save!
-    render json
   end
   
   def show
     render json: @message
+  end
+  
+  def update
+    @message.update!(message_params)
   end
 
   private

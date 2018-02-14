@@ -1,17 +1,34 @@
 import React, { Component } from 'react';
 import Form from './Form';
 
-const REQUEST_URL = 'http://localhost:3030/messages.json'
+const REQUEST_URL_EDIT = 'http://localhost:3030/messages/';
 
-class New extends Component {
-  constructor(props){
-    super(props);
+class Edit extends Component {
+  constructor(props) {
+    super(props)
+    const message_id = parseInt(this.props.match.params.id, 10)
     this.state = {
+      id: message_id,
       title: '',
-      content: ''
+      content: '',
     };
   }
+ 
+  componentWillMount() {
+    this.fetchData()
+  }
 
+  fetchData() {
+    fetch(REQUEST_URL_EDIT + this.state.id)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          title: responseData.title,
+          content: responseData.content
+        })
+      })
+  }
+  
   handleInputValue = (event) => {
     const field = event.target.name;
     this.state[field] = event.target.value;
@@ -22,31 +39,31 @@ class New extends Component {
   
   handleSubmit = (event) => {
     event.preventDefault();
-    fetch(REQUEST_URL, {
-      method: 'POST',
+    fetch(REQUEST_URL_EDIT + this.state.id, {
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         message: {
-          title: this.state.title,
+          title: this.state.title, 
           content: this.state.content
         }
       })
     })
     .then((responseData) => {
       this.props.history.push('/');
-    });
+    })    
   }
 
-  render() {
+  render(){
     const { title, content } = this.state;
-    return (
+    return(
       <div>
-        <p>New Message</p>
+        <p>Edit Message</p>
         <Form
-          submitValue='Submit'
+          submitValue='Update'
           title={ title } 
           content={ content }
           parentSubmit={ this.handleSubmit } 
@@ -56,4 +73,4 @@ class New extends Component {
   }
 }
 
-export default New;
+export default Edit;

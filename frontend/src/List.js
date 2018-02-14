@@ -20,7 +20,7 @@ class List extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
-          messages: responseData,
+          messages: responseData
         })
       })
   }
@@ -45,8 +45,8 @@ class List extends Component {
                <tr key={message.id}>
                  <td>{message.title}</td>
                  <td>{message.content}</td>
-                 <td><Link to={ '/message/' + message.id }>show</Link></td>
-                 <td>edit</td>
+                 <td><Link to={ '/message/' + message.id }>Show</Link></td>
+                 <td><Link to={ '/message/' + message.id + '/edit' }>Edit</Link></td>
                  <td>destroy</td>
                </tr>
               );

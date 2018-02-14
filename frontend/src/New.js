@@ -35,8 +35,14 @@ class New extends Component {
         }
       })
     })
-    .then((responseData) => {
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
       this.props.history.push('/');
+    })
+    .catch((err) => {
+      console.error(err);
     });
   }
 

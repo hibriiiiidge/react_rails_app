@@ -20,6 +20,12 @@ class Edit extends Component {
 
   fetchData() {
     fetch(REQUEST_URL_EDIT + this.state.id)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response;
+      })
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
@@ -27,6 +33,9 @@ class Edit extends Component {
           content: responseData.content
         })
       })
+      .catch((err) => {
+        console.error(err);
+      });
   }
   
   handleInputValue = (event) => {
@@ -52,9 +61,15 @@ class Edit extends Component {
         }
       })
     })
-    .then((responseData) => {
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
       this.props.history.push('/');
-    })    
+    })
+    .catch((err) => {
+      console.error(err);
+    }); 
   }
 
   render(){

@@ -17,12 +17,22 @@ class List extends Component {
   
   fetchData() {
     fetch(REQUEST_URL)
+      .then((response) => {
+        // 4xx系, 5xx系エラーのときには response.ok = false になる
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response;
+      })
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
           messages: responseData
         })
       })
+      .catch((err) => {
+        console.error(err);
+      });
   }
   
   render(){

@@ -19,12 +19,21 @@ class Show extends Component {
 
   fetchData() {
     fetch(REQUEST_URL_SHOW + this.state.id)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response;
+      })
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
           message: responseData
-        });
+        })
       })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   render(){

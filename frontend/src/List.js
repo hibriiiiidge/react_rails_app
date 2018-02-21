@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Table from './Table';
 
 const REQUEST_URL = 'http://localhost:3030/messages.json'
 const REQUEST_URL_DELETE = 'http://localhost:3030/messages/'
@@ -103,37 +104,15 @@ class List extends Component {
   }
   
   render(){
-    const { messages } = this.state;
+    const { messages, searchTitle } = this.state;
     return(
       <div>
         <div>
           <label>SearchTitle:</label>
-          <input type="text" name="searchTitle" value={ this.state.searchTitle } onChange={ this.handleInputSearchTitle } />
+          <input type="text" name="searchTitle" value={ searchTitle } onChange={ this.handleInputSearchTitle } />
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Content</th>
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            { messages.map((message) => {
-              return (
-               <tr key={ message.id }>
-                 <td>{ message.title }</td>
-                 <td>{ message.content }</td>
-                 <td><Link to={ '/message/' + message.id }>Show</Link></td>
-                 <td><Link to={ '/message/' + message.id + '/edit' }>Edit</Link></td>
-                 <td><a href="javascript:void(0)" onClick={ () => { if (window.confirm('本当に削除しますか?')) this.hundleDestroy(event, message.id) } }>destroy</a></td>
-               </tr>
-              );
-            }) }
-          </tbody>
-        </table>
+        { messages.length == 0 && <div>該当するメッセージはありません。</div> }
+        { messages.length > 0 && <Table messages={ messages } parentHundleDestroy={ this.hundleDestroy } /> }
       </div>
     );
   }

@@ -24,7 +24,7 @@ class Form extends Component {
           <label>title:</label>
           <input type="text" name="title" value={ title } onChange={ this.handleInputValue } />
           <label>content:</label>
-          <textarea name="content" value={ content } onChange={ this.props.parentInputValue } />
+          <textarea name="content" value={ content } onChange={ this.handleInputValue } />
           <input type="submit" value={ submitValue } disabled={ clickable } />
         </form>
       </div>
